@@ -12,27 +12,27 @@ from fos import seminmf_full as seminmf
 
 
 @click.command()
-@click.option('--data_file', required=True, help='Path to .npz with counts and optional mask.')
+@click.option('--data_file', required=True, help='Path to .npz with raw_counts, bg_counts, and optional mask.')
 @click.option('--results_dir', required=True, help='Directory to save results.')
 @click.option('--mask_key', default=None, help='Optional key in NPZ file for training mask.')
 @click.option('--max_num_factors', default=25, help='Largest number of factors to try.')
 @click.option('--num_iters', default=250, help='Number of EM iterations.')
 @click.option('--num_coord_ascent_iters', default=1, help='Coordinate-ascent steps per iteration.')
 @click.option('--elastic_net_frac', default=1.0, help='Elastic net mixing fraction.')
-@click.option('--gaussian_var', default=None, type=float, help='Observation variance for Gaussian model.')
-@click.option('--wandb_project', default='fos-counts-gaussian-search', help='Weights & Biases project name.')
+@click.option('--wandb_project', default='fos-counts-poisson-search', help='Weights & Biases project name.')
 @click.option('--seed', default=0, help='Random seed.')
 def main(data_file, results_dir, mask_key, max_num_factors, num_iters,
-         num_coord_ascent_iters, elastic_net_frac, gaussian_var,
+         num_coord_ascent_iters, elastic_net_frac,
          wandb_project, seed):
     os.makedirs(results_dir, exist_ok=True)
 
     data = np.load(data_file)
-    counts = data['counts']
+    raw_counts = data['raw_counts']
+    bg_counts = data['bg_counts']
+    counts = data.get('counts')
+    if counts is None:
+        counts = raw_counts - bg_counts
     mask = data[mask_key] if mask_key is not None and mask_key in data else None
-
-    if gaussian_var is None:
-        gaussian_var = float(np.var(counts))
 
     key = jr.PRNGKey(seed)
     mean_func = 'softplus'
@@ -54,7 +54,7 @@ def main(data_file, results_dir, mask_key, max_num_factors, num_iters,
                     elastic_net_frac=elastic_net_frac,
                     max_num_iters=num_iters,
                     num_coord_ascent_iters=num_coord_ascent_iters,
-                    model='gaussian_softplus',
+                    model='poisson_bg_offset',
                     initialization='random',
                     data_file=data_file,
                     mask_key=mask_key,
@@ -69,7 +69,7 @@ def main(data_file, results_dir, mask_key, max_num_factors, num_iters,
                 loadings=full_initial_params.loadings[:, :num_factors],
             )
 
-            params, losses = seminmf.fit_gaussian_seminmf(
+            params, losses = seminmf.fit_poisson_seminmf(
                 counts,
                 initial_params,
                 mask=mask,
@@ -78,7 +78,7 @@ def main(data_file, results_dir, mask_key, max_num_factors, num_iters,
                 elastic_net_frac=elastic_net_frac,
                 num_iters=num_iters,
                 num_coord_ascent_iters=num_coord_ascent_iters,
-                gaussian_var=gaussian_var,
+                bg_counts=bg_counts,
             )
 
             heldout_mask = ~mask if mask is not None else jnp.ones_like(counts, dtype=bool)
@@ -87,8 +87,8 @@ def main(data_file, results_dir, mask_key, max_num_factors, num_iters,
                 counts,
                 heldout_mask,
                 mean_func,
-                distribution='gaussian',
-                gaussian_var=gaussian_var,
+                distribution='poisson',
+                bg_counts=bg_counts,
             )
             all_heldout_loglikes = all_heldout_loglikes.at[i, j].set(heldout_ll)
 
@@ -98,8 +98,7 @@ def main(data_file, results_dir, mask_key, max_num_factors, num_iters,
                                  losses=np.array(losses),
                                  sparsity_penalty=float(sparsity_penalty),
                                  num_factors=int(num_factors),
-                                 heldout_loglike=float(heldout_ll),
-                                 gaussian_var=gaussian_var), f)
+                                 heldout_loglike=float(heldout_ll)), f)
 
             run.summary['final_loss'] = float(losses[-1])
             run.summary['heldout_loglike'] = float(heldout_ll)
