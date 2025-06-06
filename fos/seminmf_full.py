@@ -1,3 +1,21 @@
+"""Semi-NMF for count or adjusted-count data.
+
+The model is designed to work with datasets consisting of the following
+quantities:
+
+* ``raw_counts``: non-negative integer counts assumed to follow a Poisson
+  distribution.
+* ``bg_counts``: background estimate with a roughly Poisson distribution; its
+  entries may be negative or positive and need not be integers.
+* ``counts``: the adjusted data defined as ``raw_counts - bg_counts``.  This
+  array must be non-negative; shifting ``counts`` or ``bg_counts`` is acceptable
+  if required.
+
+When a Poisson likelihood is chosen the background term is added to the rate
+parameter.  Alternatively, the adjusted counts may be modeled directly with a
+Gaussian likelihood via a softplus link.
+"""
+
 import dataclasses
 import jax.numpy as jnp
 import jax.random as jr
