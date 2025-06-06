@@ -96,8 +96,6 @@ def smooth_loss(
         obs = jnp.maximum(obs, 0.0)
         ll = tfd.Poisson(rate=rate).log_prob(obs)
     elif distribution == "gaussian":
-        # For Gaussian, we don't need to ensure predictions are positive
-        # since we're modeling the data directly
         ll = tfd.Normal(loc=predictions, scale=jnp.sqrt(gaussian_var)).log_prob(counts)
     else:
         raise ValueError(f"invalid distribution: {distribution}")
@@ -185,21 +183,10 @@ def compute_quadratic_approx(counts: Float[Array, "num_rows num_columns"],
         sigm = sigmoid(activations)
         sigm = jnp.clip(sigm, 1e-8, 1 - 1e-8)
         
-        # For Gaussian with softplus, we need to account for the transformation
-        # The gradient of softplus is sigmoid
-        dg = sigm
-        # The second derivative of softplus is sigmoid * (1 - sigmoid)
         d2g = sigm * (1 - sigm)
-        
-        # Compute the quadratic approximation for the Gaussian case
-        # Note: predictions = softplus(activations)
-        # Add small epsilon to avoid division by zero
+        dg = sigm
         J = mask * jnp.maximum((d2g * (predictions - counts) / gaussian_var + (dg ** 2) / gaussian_var), 1e-10)
         h = mask * dg * (counts - predictions) / gaussian_var
-        
-        # Ensure numerical stability
-        J = jnp.clip(J, 1e-10, 1e10)
-        h = jnp.clip(h, -1e10, 1e10)
     else:
         raise ValueError(f"invalid distribution: {distribution}")
 
