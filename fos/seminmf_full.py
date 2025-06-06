@@ -89,9 +89,12 @@ def smooth_loss(
         )
 
     if distribution == "poisson":
-        rate = predictions + bg_counts
-        obs = counts + bg_counts
-        ll = tfd.Poisson(rate=rate + 1e-8).log_prob(obs)
+        # Ensure rate is always positive by using a minimum threshold
+        rate = jnp.maximum(predictions + bg_counts, 1e-8)
+        obs = counts + bg_counts  # This reconstructs raw_counts
+        # Ensure observations are non-negative for Poisson
+        obs = jnp.maximum(obs, 0.0)
+        ll = tfd.Poisson(rate=rate).log_prob(obs)
     elif distribution == "gaussian":
         ll = tfd.Normal(loc=predictions, scale=jnp.sqrt(gaussian_var)).log_prob(counts)
     else:
@@ -162,17 +165,27 @@ def compute_quadratic_approx(counts: Float[Array, "num_rows num_columns"],
         )
 
     if distribution == "poisson":
-        rate = predictions + bg_counts
+        # Ensure rate is always positive
+        rate = jnp.maximum(predictions + bg_counts, 1e-8)
         sigm = sigmoid(activations)
+        
+        # Clip sigmoid values to avoid extreme gradients
+        sigm = jnp.clip(sigm, 1e-8, 1 - 1e-8)
+        
         dg = sigm / rate
-        d2g = (sigm * (1 - sigm) * rate - sigm ** 2) / (rate ** 2)
-        J = mask * (d2g * (predictions - counts) + (dg ** 2) * rate)
+        # Add small epsilon to denominator to avoid division issues
+        d2g = (sigm * (1 - sigm) * rate - sigm ** 2) / (rate ** 2 + 1e-10)
+        
+        # Ensure J is always positive by adding a small regularization
+        J = mask * jnp.maximum(d2g * (predictions - counts) + (dg ** 2) * rate, 1e-10)
         h = mask * dg * (counts - predictions)
     elif distribution == "gaussian":
         sigm = sigmoid(activations)
+        sigm = jnp.clip(sigm, 1e-8, 1 - 1e-8)
+        
         d2g = sigm * (1 - sigm)
         dg = sigm
-        J = mask * (d2g * (predictions - counts) / gaussian_var + (dg ** 2) / gaussian_var)
+        J = mask * jnp.maximum((d2g * (predictions - counts) / gaussian_var + (dg ** 2) / gaussian_var), 1e-10)
         h = mask * dg * (counts - predictions) / gaussian_var
     else:
         raise ValueError(f"invalid distribution: {distribution}")
@@ -193,7 +206,9 @@ def update_loadings(quad: QuadraticApprox,
             loading_mk, factor_k = args
             num = jnp.einsum('n,n->', factor_k, (h_m + J_m * loading_mk * factor_k))
             den = jnp.einsum('n,n,n->', J_m, factor_k, factor_k) + (1 - elastic_net_frac) * sparsity_penalty
-            new_loading_mk = soft_threshold(num, elastic_net_frac * sparsity_penalty) / (den + 1e-8)
+            # Ensure denominator is positive
+            den = jnp.maximum(den, 1e-8)
+            new_loading_mk = soft_threshold(num, elastic_net_frac * sparsity_penalty) / den
             h_m += J_m * loading_mk * factor_k
             h_m -= J_m * new_loading_mk * factor_k
             return h_m, new_loading_mk
@@ -212,7 +227,9 @@ def update_factors(quad: QuadraticApprox, params: SemiNMFParams):
             factor_nk, loading_k = args
             num = jnp.einsum('m,m->', loading_k, (h_n + J_n * factor_nk * loading_k))
             den = jnp.einsum('m,m,m->', J_n, loading_k, loading_k)
-            new_factor_nk = jnp.maximum(num, 0.0) / (den + 1e-8)
+            # Ensure denominator is positive
+            den = jnp.maximum(den, 1e-8)
+            new_factor_nk = jnp.maximum(num, 0.0) / den
             h_n += J_n * factor_nk * loading_k
             h_n -= J_n * new_factor_nk * loading_k
             return h_n, new_factor_nk
@@ -222,9 +239,12 @@ def update_factors(quad: QuadraticApprox, params: SemiNMFParams):
     h_countsT, factorsT = vmap(_update_one_column)(quad.h_counts.T, quad.J_counts.T, params.factors.T)
     h_counts = h_countsT.T
     factors = factorsT.T
+    
+    # Normalize factors with safety check
     scale = factors.sum(axis=1) + 1e-8
     factors /= scale[:, None]
     loadings = params.loadings * scale
+    
     params = dataclasses.replace(params, factors=factors, loadings=loadings)
     quad = dataclasses.replace(quad, h_counts=h_counts)
     return quad, params
@@ -234,6 +254,8 @@ def update_row_effect(quad: QuadraticApprox, params: SemiNMFParams):
     def _update_one_row(h_m, J_m, row_effect_m):
         num = jnp.einsum('n->', h_m + J_m * row_effect_m)
         den = jnp.einsum('n->', J_m)
+        # Ensure denominator is positive
+        den = jnp.maximum(den, 1e-8)
         new_row_effect_m = num / den
         h_m += J_m * row_effect_m
         h_m -= J_m * new_row_effect_m
@@ -249,6 +271,8 @@ def update_column_effect(quad: QuadraticApprox, params: SemiNMFParams):
     def _update_one_column(h_n, J_n, col_effect_n):
         num = jnp.einsum('m->', h_n + J_n * col_effect_n)
         den = jnp.einsum('m->', J_n)
+        # Ensure denominator is positive
+        den = jnp.maximum(den, 1e-8)
         new_col_effect_n = num / den
         h_n += J_n * col_effect_n
         h_n -= J_n * new_col_effect_n
@@ -256,9 +280,12 @@ def update_column_effect(quad: QuadraticApprox, params: SemiNMFParams):
 
     h_countsT, col_effects = vmap(_update_one_column)(quad.h_counts.T, quad.J_counts.T, params.column_effects)
     h_counts = h_countsT.T
+    
+    # Center column effects
     mean = jnp.mean(col_effects)
     col_effects -= mean
     row_effects = params.row_effects + mean
+    
     params = dataclasses.replace(params, row_effects=row_effects, column_effects=col_effects)
     quad = dataclasses.replace(quad, h_counts=h_counts)
     return quad, params
@@ -268,34 +295,69 @@ def update_column_effect(quad: QuadraticApprox, params: SemiNMFParams):
 # Initialization helpers
 # -----------------------------------------------------------------------------
 
-def initialize_random(key: jr.PRNGKey, data: Array, num_factors: int, mean_func: str) -> SemiNMFParams:
+def initialize_random(key: jr.PRNGKey, data: Array, num_factors: int, mean_func: str, 
+                     bg_counts: float | Array = 0.0) -> SemiNMFParams:
     m, n = data.shape
+    
+    bg_counts = jnp.asarray(bg_counts)
+    if bg_counts.ndim == 0:
+        bg_counts = jnp.broadcast_to(bg_counts, data.shape)
+    
     if mean_func.lower() == "softplus":
-        data = jnp.maximum(data, 1e-1)
-        targets = data + jnp.log(1 - jnp.exp(-data))
+        # When using Poisson with bg_counts, we need to ensure predictions + bg_counts > 0
+        # So we initialize based on ensuring this constraint
+        # We want softplus(activations) + bg_counts > 0
+        # So softplus(activations) > -bg_counts (when bg_counts < 0)
+        
+        # For positive data values, standard inverse softplus
+        # For areas where bg_counts is very negative, we need larger activations
+        min_predictions = jnp.maximum(-bg_counts + 0.1, 0.1)
+        safe_data = jnp.maximum(data, min_predictions)
+        
+        # Compute target activations
+        targets = safe_data + jnp.log(1 - jnp.exp(-safe_data))
     else:
         raise ValueError(f"invalid mean function: {mean_func}")
+    
     row_effects = targets.mean(axis=1)
     col_effects = jnp.zeros(n)
-    factors = jr.exponential(key, shape=(num_factors, n))
+    
+    # Initialize factors with small positive values
+    k1, k2 = jr.split(key)
+    factors = jr.exponential(k1, shape=(num_factors, n))
     factors /= factors.sum(axis=1, keepdims=True)
-    loadings = jnp.zeros((m, num_factors))
+    
+    # Initialize loadings with small random values
+    loadings = 0.1 * jr.normal(k2, shape=(m, num_factors))
+    
     return SemiNMFParams(factors, loadings, row_effects, col_effects)
 
 
 def initialize_prediction(counts: Array,
                           initial_params: SemiNMFParams,
-                          mean_func: str) -> SemiNMFParams:
+                          mean_func: str,
+                          bg_counts: float | Array = 0.0) -> SemiNMFParams:
     num_rows, num_cols = counts.shape
+    
+    bg_counts = jnp.asarray(bg_counts)
+    if bg_counts.ndim == 0:
+        bg_counts = jnp.broadcast_to(bg_counts, counts.shape)
+    
     if mean_func.lower() == "softplus":
-        pc = jnp.maximum(counts, 1e-1)
-        targets = pc + jnp.log(1 - jnp.exp(-pc))
+        # Similar safety handling as in initialize_random
+        min_predictions = jnp.maximum(-bg_counts + 0.1, 0.1)
+        safe_counts = jnp.maximum(counts, min_predictions)
+        targets = safe_counts + jnp.log(1 - jnp.exp(-safe_counts))
     else:
         raise ValueError(f"invalid mean function: {mean_func}")
+    
     targets -= initial_params.column_effects
     factors = initial_params.factors
     padded = jnp.row_stack((jnp.ones(num_cols), factors))
-    loadings = jnp.linalg.solve(jnp.einsum('jn,kn->jk', padded, padded),
+    
+    # Add regularization to avoid singular matrix
+    reg = 1e-6 * jnp.eye(padded.shape[0])
+    loadings = jnp.linalg.solve(jnp.einsum('jn,kn->jk', padded, padded) + reg,
                                 jnp.einsum('mn,kn->km', targets, padded)).T
     row_effects = loadings[:, 0]
     loadings = loadings[:, 1:]
@@ -375,15 +437,22 @@ def fit_seminmf(counts: Array,
             print("NaN loss at iteration", itr)
             print(
                 "counts min", float(jnp.min(counts)),
-                "max", float(jnp.max(counts))
+                "max", float(jnp.max(counts)),
+                "mean", float(jnp.mean(counts))
             )
             print(
                 "bg_counts min", float(jnp.min(bg_counts)),
-                "max", float(jnp.max(bg_counts))
+                "max", float(jnp.max(bg_counts)),
+                "mean", float(jnp.mean(bg_counts))
             )
             print(
                 "predictions min", float(jnp.min(dbg_pred)),
-                "max", float(jnp.max(dbg_pred))
+                "max", float(jnp.max(dbg_pred)),
+                "mean", float(jnp.mean(dbg_pred))
+            )
+            print(
+                "rate (pred + bg) min", float(jnp.min(dbg_pred + bg_counts)),
+                "max", float(jnp.max(dbg_pred + bg_counts))
             )
             break
         if jnp.abs(losses[-1] - losses[-2]) < tolerance:
@@ -402,7 +471,7 @@ def predict_seminmf(counts: Array,
                     distribution: str = "poisson",
                     bg_counts: float | Array = 0.0,
                     gaussian_var: float = 1.0):
-    params = initialize_prediction(counts, params, mean_func)
+    params = initialize_prediction(counts, params, mean_func, bg_counts=bg_counts)
     mask = jnp.ones_like(counts, dtype=bool)
 
     bg_counts = jnp.asarray(bg_counts)
@@ -448,15 +517,22 @@ def predict_seminmf(counts: Array,
             print("NaN loss at iteration", itr)
             print(
                 "counts min", float(jnp.min(counts)),
-                "max", float(jnp.max(counts))
+                "max", float(jnp.max(counts)),
+                "mean", float(jnp.mean(counts))
             )
             print(
                 "bg_counts min", float(jnp.min(bg_counts)),
-                "max", float(jnp.max(bg_counts))
+                "max", float(jnp.max(bg_counts)),
+                "mean", float(jnp.mean(bg_counts))
             )
             print(
                 "predictions min", float(jnp.min(dbg_pred)),
-                "max", float(jnp.max(dbg_pred))
+                "max", float(jnp.max(dbg_pred)),
+                "mean", float(jnp.mean(dbg_pred))
+            )
+            print(
+                "rate (pred + bg) min", float(jnp.min(dbg_pred + bg_counts)),
+                "max", float(jnp.max(dbg_pred + bg_counts))
             )
             break
         if jnp.abs(losses[-1] - losses[-2]) < tolerance:
@@ -480,4 +556,3 @@ def fit_gaussian_seminmf(counts, initial_params, gaussian_var=1.0, **kwargs):
 
 def predict_gaussian_seminmf(counts, params, gaussian_var=1.0, **kwargs):
     return predict_seminmf(counts, params, distribution="gaussian", gaussian_var=gaussian_var, **kwargs)
-
