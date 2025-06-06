@@ -34,6 +34,11 @@ def main(data_file, results_dir, mask_key, max_num_factors, num_iters,
         counts = raw_counts - bg_counts
     mask = data[mask_key] if mask_key is not None and mask_key in data else None
 
+    if bg_counts.shape != counts.shape:
+        raise ValueError(
+            f"bg_counts shape {bg_counts.shape} does not match counts shape {counts.shape}"
+        )
+
     key = jr.PRNGKey(seed)
     mean_func = 'softplus'
     full_initial_params = seminmf.initialize_random(key, counts, max_num_factors, mean_func)

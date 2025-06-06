@@ -65,16 +65,28 @@ def compute_activations(params: SemiNMFParams) -> Float[Array, "num_rows num_col
             + jnp.einsum('mk,kn->mn', params.loadings, params.factors))
 
 
-def smooth_loss(params: SemiNMFParams,
-                counts: Float[Array, "num_rows num_columns"],
-                mask: Float[Array, "num_rows num_columns"],
-                mean_func: str,
-                distribution: str = "poisson",
-                bg_counts: float = 0.0,
-                gaussian_var: float = 1.0) -> Float[Array, ""]:
+def smooth_loss(
+    params: SemiNMFParams,
+    counts: Float[Array, "num_rows num_columns"],
+    mask: Float[Array, "num_rows num_columns"],
+    mean_func: str,
+    distribution: str = "poisson",
+    bg_counts: float | Array = 0.0,
+    gaussian_var: float = 1.0,
+) -> Float[Array, ""]:
+    """Compute the negative log-likelihood without penalties."""
+
     g = dict(softplus=softplus)[mean_func]
     activations = compute_activations(params)
     predictions = g(activations)
+
+    bg_counts = jnp.asarray(bg_counts)
+    if bg_counts.ndim == 0:
+        bg_counts = jnp.broadcast_to(bg_counts, counts.shape)
+    elif bg_counts.shape != counts.shape:
+        raise ValueError(
+            f"bg_counts shape {bg_counts.shape} does not match counts shape {counts.shape}"
+        )
 
     if distribution == "poisson":
         rate = predictions + bg_counts
@@ -101,12 +113,25 @@ def compute_loss(counts: Float[Array, "num_rows num_columns"],
                  sparsity_penalty: float,
                  elastic_net_frac: float,
                  distribution: str = "poisson",
-                 bg_counts: float = 0.0,
+                 bg_counts: float | Array = 0.0,
                  gaussian_var: float = 1.0) -> Float[Array, ""]:
-    loss = smooth_loss(params, counts, mask, mean_func,
-                       distribution=distribution,
-                       bg_counts=bg_counts,
-                       gaussian_var=gaussian_var)
+    bg_counts = jnp.asarray(bg_counts)
+    if bg_counts.ndim == 0:
+        bg_counts = jnp.broadcast_to(bg_counts, counts.shape)
+    elif bg_counts.shape != counts.shape:
+        raise ValueError(
+            f"bg_counts shape {bg_counts.shape} does not match counts shape {counts.shape}"
+        )
+
+    loss = smooth_loss(
+        params,
+        counts,
+        mask,
+        mean_func,
+        distribution=distribution,
+        bg_counts=bg_counts,
+        gaussian_var=gaussian_var,
+    )
     loss += penalty(params, sparsity_penalty, elastic_net_frac)
     return loss / counts.size
 
@@ -120,13 +145,21 @@ def compute_quadratic_approx(counts: Float[Array, "num_rows num_columns"],
                              params: SemiNMFParams,
                              mean_func: str,
                              distribution: str = "poisson",
-                             bg_counts: float = 0.0,
+                             bg_counts: float | Array = 0.0,
                              gaussian_var: float = 1.0) -> QuadraticApprox:
     if mean_func.lower() != "softplus":
         raise ValueError(f"invalid mean function: {mean_func}")
 
     activations = compute_activations(params)
     predictions = softplus(activations)
+
+    bg_counts = jnp.asarray(bg_counts)
+    if bg_counts.ndim == 0:
+        bg_counts = jnp.broadcast_to(bg_counts, counts.shape)
+    elif bg_counts.shape != counts.shape:
+        raise ValueError(
+            f"bg_counts shape {bg_counts.shape} does not match counts shape {counts.shape}"
+        )
 
     if distribution == "poisson":
         rate = predictions + bg_counts
@@ -283,9 +316,17 @@ def fit_seminmf(counts: Array,
                 num_coord_ascent_iters: int = 20,
                 tolerance: float = 1e-1,
                 distribution: str = "poisson",
-                bg_counts: float = 0.0,
+                bg_counts: float | Array = 0.0,
                 gaussian_var: float = 1.0):
     mask = jnp.ones_like(counts, dtype=bool) if mask is None else mask
+
+    bg_counts = jnp.asarray(bg_counts)
+    if bg_counts.ndim == 0:
+        bg_counts = jnp.broadcast_to(bg_counts, counts.shape)
+    elif bg_counts.shape != counts.shape:
+        raise ValueError(
+            f"bg_counts shape {bg_counts.shape} does not match counts shape {counts.shape}"
+        )
 
     @jit
     def _step(params, _):
@@ -327,7 +368,24 @@ def fit_seminmf(counts: Array,
     for itr in pbar:
         params, loss = _step(params, itr)
         losses.append(loss)
-        pbar.comment = f"loss: {losses[-1]:.4f}"
+        loss_val = float(loss)
+        pbar.comment = f"loss: {loss_val:.4f}"
+        if jnp.isnan(loss):
+            dbg_pred = softplus(compute_activations(params))
+            print("NaN loss at iteration", itr)
+            print(
+                "counts min", float(jnp.min(counts)),
+                "max", float(jnp.max(counts))
+            )
+            print(
+                "bg_counts min", float(jnp.min(bg_counts)),
+                "max", float(jnp.max(bg_counts))
+            )
+            print(
+                "predictions min", float(jnp.min(dbg_pred)),
+                "max", float(jnp.max(dbg_pred))
+            )
+            break
         if jnp.abs(losses[-1] - losses[-2]) < tolerance:
             break
     return params, jnp.stack(losses)
@@ -342,10 +400,18 @@ def predict_seminmf(counts: Array,
                     num_coord_ascent_iters: int = 20,
                     tolerance: float = 1e-1,
                     distribution: str = "poisson",
-                    bg_counts: float = 0.0,
+                    bg_counts: float | Array = 0.0,
                     gaussian_var: float = 1.0):
     params = initialize_prediction(counts, params, mean_func)
     mask = jnp.ones_like(counts, dtype=bool)
+
+    bg_counts = jnp.asarray(bg_counts)
+    if bg_counts.ndim == 0:
+        bg_counts = jnp.broadcast_to(bg_counts, counts.shape)
+    elif bg_counts.shape != counts.shape:
+        raise ValueError(
+            f"bg_counts shape {bg_counts.shape} does not match counts shape {counts.shape}"
+        )
 
     @jit
     def _step(params, _):
@@ -375,7 +441,24 @@ def predict_seminmf(counts: Array,
     for itr in pbar:
         params, loss = _step(params, itr)
         losses.append(loss)
-        pbar.comment = f"loss: {losses[-1]:.4f}"
+        loss_val = float(loss)
+        pbar.comment = f"loss: {loss_val:.4f}"
+        if jnp.isnan(loss):
+            dbg_pred = softplus(compute_activations(params))
+            print("NaN loss at iteration", itr)
+            print(
+                "counts min", float(jnp.min(counts)),
+                "max", float(jnp.max(counts))
+            )
+            print(
+                "bg_counts min", float(jnp.min(bg_counts)),
+                "max", float(jnp.max(bg_counts))
+            )
+            print(
+                "predictions min", float(jnp.min(dbg_pred)),
+                "max", float(jnp.max(dbg_pred))
+            )
+            break
         if jnp.abs(losses[-1] - losses[-2]) < tolerance:
             break
     return params, jnp.stack(losses)
