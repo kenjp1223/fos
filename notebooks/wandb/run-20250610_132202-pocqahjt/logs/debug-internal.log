@@ -1,0 +1,61 @@
+{"time":"2025-06-10T13:22:02.4801689-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-10T13:22:02.4801689-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250610_132202-pocqahjt\\logs\\debug-core.log"}
+{"time":"2025-06-10T13:22:02.5881432-07:00","level":"INFO","msg":"created new stream","id":"pocqahjt"}
+{"time":"2025-06-10T13:22:02.5881432-07:00","level":"INFO","msg":"stream: started","id":"pocqahjt"}
+{"time":"2025-06-10T13:22:02.5881432-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"pocqahjt"}
+{"time":"2025-06-10T13:22:02.5887175-07:00","level":"INFO","msg":"handler: started","stream_id":"pocqahjt"}
+{"time":"2025-06-10T13:22:02.5887175-07:00","level":"INFO","msg":"sender: started","stream_id":"pocqahjt"}
+{"time":"2025-06-10T13:22:02.8639743-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-10T13:22:12.8660631-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-10T15:35:29.3338737-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:42:24.5056693-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:42:24.616137-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:43:01.1806439-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:43:01.2459538-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:43:01.6844896-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:43:01.7425238-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:43:04.4604488-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:43:04.923878-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:43:05.2390951-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:43:05.2414989-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:43:44.8143456-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:43:44.8205221-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:43:44.9401894-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:43:44.9477385-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:43:45.1025135-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:43:45.1067222-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:43:45.1187175-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:43:45.121312-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-10T15:44:07.1625968-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-10T15:45:02.9081826-07:00","level":"ERROR","msg":"monitor: cpu: error sampling metrics: couldn't find pid: 204544"}
+{"time":"2025-06-10T15:53:14.8039176-07:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-10T19:01:48.9166318-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:02:12.0010778-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:02:37.4663572-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:03:06.5055777-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:03:45.7427992-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:04:08.9547763-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-11T10:41:44.4002274-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-11T10:41:51.9504484-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-11T10:50:54.3804309-07:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-11T18:18:04.3748183-07:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-11T21:51:29.3795776-07:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:12:25.790239-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:15:23.5223818-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:16:20.6833179-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:17:06.0999884-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:19:38.5321438-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:20:47.4845494-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:22:31.5717598-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:22:41.9003056-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:23:51.3294272-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:25:21.6676307-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:26:57.7002762-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:27:33.651922-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:28:50.8350587-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:29:29.0762976-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:30:56.1830458-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:31:45.7658698-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:32:00.7656535-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:32:55.79631-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}
+{"time":"2025-06-12T11:33:18.06328-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/pocqahjt/file_stream"}

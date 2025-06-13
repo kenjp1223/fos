@@ -1,0 +1,37 @@
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_setup.py:_flush():79] Current SDK version is 0.18.7
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_setup.py:_flush():79] Configure stats pid to 17560
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_setup.py:_flush():79] Loading settings from C:\Users\stuberadmin\.config\wandb\settings
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_setup.py:_flush():79] Loading settings from c:\Users\stuberadmin\fos\notebooks\wandb\settings
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_setup.py:_flush():79] Loading settings from environment variables: {}
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_setup.py:_flush():79] Applying setup settings: {'mode': None, '_disable_service': None}
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_setup.py:_flush():79] Inferring run settings from compute environment: {'program': '<python with no main file>'}
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_setup.py:_flush():79] Applying login settings: {}
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_init.py:_log_setup():533] Logging user logs to c:\Users\stuberadmin\fos\notebooks\wandb\run-20250612_192733-k88ek8cg\logs\debug.log
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_init.py:_log_setup():534] Logging internal logs to c:\Users\stuberadmin\fos\notebooks\wandb\run-20250612_192733-k88ek8cg\logs\debug-internal.log
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_init.py:_jupyter_setup():479] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x000002653F52BF50>
+2025-06-12 19:27:33,312 INFO    MainThread:17560 [wandb_init.py:init():619] calling init triggers
+2025-06-12 19:27:33,313 INFO    MainThread:17560 [wandb_init.py:init():626] wandb.init called with sweep_config: {}
+config: {'sparsity_penalty': 1.0, 'num_factors': Array(24, dtype=int32), 'elastic_net_frac': 1.0, 'max_num_iters': 25, 'num_coord_ascent_iters': 1, 'mean_func': 'softplus', 'initialization': 'nnsvd', 'data_file': '\\\\10.159.50.7\\LabCommon\\Ken\\data\\Opioid_cFos\\result\\unbiased_adjusted_brain_heatmap', 'mask_key': 0, 'mask_size': 10, 'num_mask_per_mouse': 3}
+2025-06-12 19:27:33,313 INFO    MainThread:17560 [wandb_init.py:init():669] starting backend
+2025-06-12 19:27:33,313 INFO    MainThread:17560 [wandb_init.py:init():673] sending inform_init request
+2025-06-12 19:27:33,314 INFO    MainThread:17560 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=spawn, using: spawn
+2025-06-12 19:27:33,314 INFO    MainThread:17560 [wandb_init.py:init():686] backend started and connected
+2025-06-12 19:27:33,316 INFO    MainThread:17560 [wandb_run.py:_label_probe_notebook():1339] probe notebook
+2025-06-12 19:27:33,317 INFO    MainThread:17560 [wandb_init.py:init():781] updated telemetry
+2025-06-12 19:27:33,345 INFO    MainThread:17560 [wandb_init.py:init():814] communicating run to backend with 90.0 second timeout
+2025-06-12 19:27:33,550 INFO    MainThread:17560 [wandb_init.py:init():867] starting run threads in backend
+2025-06-12 19:27:33,741 INFO    MainThread:17560 [wandb_run.py:_console_start():2456] atexit reg
+2025-06-12 19:27:33,741 INFO    MainThread:17560 [wandb_run.py:_redirect():2305] redirect: wrap_raw
+2025-06-12 19:27:33,741 INFO    MainThread:17560 [wandb_run.py:_redirect():2370] Wrapping output streams.
+2025-06-12 19:27:33,741 INFO    MainThread:17560 [wandb_run.py:_redirect():2395] Redirects installed.
+2025-06-12 19:27:33,741 INFO    MainThread:17560 [wandb_init.py:init():911] run started, returning control to user process
+2025-06-12 19:28:30,073 INFO    MainThread:17560 [wandb_run.py:_finish():2155] finishing run ken1223-university-of-washington/morphine-fos-seminmf-counts/k88ek8cg
+2025-06-12 19:28:30,073 INFO    MainThread:17560 [jupyter.py:save_history():459] not saving jupyter history
+2025-06-12 19:28:30,073 INFO    MainThread:17560 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2025-06-12 19:28:30,073 INFO    MainThread:17560 [wandb_init.py:_jupyter_teardown():461] cleaning up jupyter logic
+2025-06-12 19:28:30,073 INFO    MainThread:17560 [wandb_run.py:_atexit_cleanup():2420] got exitcode: 0
+2025-06-12 19:28:30,073 INFO    MainThread:17560 [wandb_run.py:_restore():2402] restore
+2025-06-12 19:28:30,074 INFO    MainThread:17560 [wandb_run.py:_restore():2408] restore done
+2025-06-12 19:28:31,896 INFO    MainThread:17560 [wandb_run.py:_footer_history_summary_info():3960] rendering history
+2025-06-12 19:28:31,896 INFO    MainThread:17560 [wandb_run.py:_footer_history_summary_info():3992] rendering summary
+2025-06-12 19:28:31,900 INFO    MainThread:17560 [wandb_run.py:_footer_sync_info():3921] logging synced files

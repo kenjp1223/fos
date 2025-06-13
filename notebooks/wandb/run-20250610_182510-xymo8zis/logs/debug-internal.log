@@ -1,0 +1,23 @@
+{"time":"2025-06-10T18:25:10.8159888-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-10T18:25:10.8159888-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250610_182510-xymo8zis\\logs\\debug-core.log"}
+{"time":"2025-06-10T18:25:10.9226861-07:00","level":"INFO","msg":"created new stream","id":"xymo8zis"}
+{"time":"2025-06-10T18:25:10.9226861-07:00","level":"INFO","msg":"stream: started","id":"xymo8zis"}
+{"time":"2025-06-10T18:25:10.9226861-07:00","level":"INFO","msg":"handler: started","stream_id":"xymo8zis"}
+{"time":"2025-06-10T18:25:10.9226861-07:00","level":"INFO","msg":"sender: started","stream_id":"xymo8zis"}
+{"time":"2025-06-10T18:25:10.9226861-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"xymo8zis"}
+{"time":"2025-06-10T18:25:11.0992049-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-10T18:25:21.0995063-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-10T19:01:47.4632268-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/xymo8zis/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:02:10.8108657-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/xymo8zis/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:02:36.2447886-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/xymo8zis/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:03:06.6389665-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/xymo8zis/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:04:03.7368816-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/xymo8zis/file_stream\": dial tcp 35.186.228.49:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."}
+{"time":"2025-06-10T19:09:30.6921681-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-10T19:09:30.6927885-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-10T19:09:31.1771169-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-10T19:09:31.2891493-07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-06-10T19:09:32.307606-07:00","level":"INFO","msg":"stream: closing","id":"xymo8zis"}
+{"time":"2025-06-10T19:09:32.307606-07:00","level":"INFO","msg":"handler: closed","stream_id":"xymo8zis"}
+{"time":"2025-06-10T19:09:32.307606-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"xymo8zis"}
+{"time":"2025-06-10T19:09:32.307606-07:00","level":"INFO","msg":"sender: closed","stream_id":"xymo8zis"}
+{"time":"2025-06-10T19:09:32.307606-07:00","level":"INFO","msg":"stream: closed","id":"xymo8zis"}

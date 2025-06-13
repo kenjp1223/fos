@@ -1,0 +1,20 @@
+{"time":"2025-06-12T09:37:04.1135211-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-12T09:37:04.1135211-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250612_093704-yo5gh4rs\\logs\\debug-core.log"}
+{"time":"2025-06-12T09:37:04.3706451-07:00","level":"INFO","msg":"created new stream","id":"yo5gh4rs"}
+{"time":"2025-06-12T09:37:04.3706451-07:00","level":"INFO","msg":"stream: started","id":"yo5gh4rs"}
+{"time":"2025-06-12T09:37:04.3706451-07:00","level":"INFO","msg":"handler: started","stream_id":"yo5gh4rs"}
+{"time":"2025-06-12T09:37:04.3706451-07:00","level":"INFO","msg":"sender: started","stream_id":"yo5gh4rs"}
+{"time":"2025-06-12T09:37:04.3706451-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"yo5gh4rs"}
+{"time":"2025-06-12T09:37:04.6575635-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-12T09:37:08.5171824-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-12T09:37:29.0066926-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-12T09:37:34.658522-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-12T09:37:40.8409178-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-12T09:37:40.8414204-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-12T09:37:41.8492745-07:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.9130048}],"total_operations":1}}
+{"time":"2025-06-12T09:37:42.500112-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-12T09:37:43.6229422-07:00","level":"INFO","msg":"stream: closing","id":"yo5gh4rs"}
+{"time":"2025-06-12T09:37:43.6229422-07:00","level":"INFO","msg":"handler: closed","stream_id":"yo5gh4rs"}
+{"time":"2025-06-12T09:37:43.6229422-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"yo5gh4rs"}
+{"time":"2025-06-12T09:37:43.6229422-07:00","level":"INFO","msg":"sender: closed","stream_id":"yo5gh4rs"}
+{"time":"2025-06-12T09:37:43.6229422-07:00","level":"INFO","msg":"stream: closed","id":"yo5gh4rs"}

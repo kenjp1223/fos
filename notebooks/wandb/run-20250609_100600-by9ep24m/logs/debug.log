@@ -1,0 +1,27 @@
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_setup.py:_flush():79] Current SDK version is 0.18.7
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_setup.py:_flush():79] Configure stats pid to 198752
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_setup.py:_flush():79] Loading settings from C:\Users\stuberadmin\.config\wandb\settings
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_setup.py:_flush():79] Loading settings from c:\Users\stuberadmin\fos\notebooks\wandb\settings
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_setup.py:_flush():79] Loading settings from environment variables: {}
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_setup.py:_flush():79] Applying setup settings: {'mode': None, '_disable_service': None}
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_setup.py:_flush():79] Inferring run settings from compute environment: {'program': '<python with no main file>'}
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_setup.py:_flush():79] Applying login settings: {}
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_init.py:_log_setup():533] Logging user logs to c:\Users\stuberadmin\fos\notebooks\wandb\run-20250609_100600-by9ep24m\logs\debug.log
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_init.py:_log_setup():534] Logging internal logs to c:\Users\stuberadmin\fos\notebooks\wandb\run-20250609_100600-by9ep24m\logs\debug-internal.log
+2025-06-09 10:06:00,156 INFO    MainThread:198752 [wandb_init.py:_jupyter_setup():479] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x0000020714C5A420>
+2025-06-09 10:06:00,157 INFO    MainThread:198752 [wandb_init.py:init():619] calling init triggers
+2025-06-09 10:06:00,157 INFO    MainThread:198752 [wandb_init.py:init():626] wandb.init called with sweep_config: {}
+config: {'sparsity_penalty': 9.999999747378752e-05, 'num_factors': Array(2, dtype=int32), 'elastic_net_frac': 1.0, 'max_num_iters': 500, 'num_coord_ascent_iters': 1, 'mean_func': 'softplus', 'initialization': 'nnsvd', 'data_file': '\\\\10.159.50.7\\LabCommon\\Ken\\data\\Opioid_cFos\\result\\unbiased_adjusted_brain_heatmap', 'mask_key': 0, 'mask_size': 20, 'num_mask_per_mouse': 3}
+2025-06-09 10:06:00,157 INFO    MainThread:198752 [wandb_init.py:init():669] starting backend
+2025-06-09 10:06:00,157 INFO    MainThread:198752 [wandb_init.py:init():673] sending inform_init request
+2025-06-09 10:06:00,158 INFO    MainThread:198752 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=spawn, using: spawn
+2025-06-09 10:06:00,159 INFO    MainThread:198752 [wandb_init.py:init():686] backend started and connected
+2025-06-09 10:06:00,161 INFO    MainThread:198752 [wandb_run.py:_label_probe_notebook():1339] probe notebook
+2025-06-09 10:06:00,188 INFO    MainThread:198752 [wandb_init.py:init():781] updated telemetry
+2025-06-09 10:06:00,217 INFO    MainThread:198752 [wandb_init.py:init():814] communicating run to backend with 90.0 second timeout
+2025-06-09 10:06:00,715 INFO    MainThread:198752 [wandb_init.py:init():867] starting run threads in backend
+2025-06-09 10:06:00,899 INFO    MainThread:198752 [wandb_run.py:_console_start():2456] atexit reg
+2025-06-09 10:06:00,899 INFO    MainThread:198752 [wandb_run.py:_redirect():2305] redirect: wrap_raw
+2025-06-09 10:06:00,899 INFO    MainThread:198752 [wandb_run.py:_redirect():2370] Wrapping output streams.
+2025-06-09 10:06:00,899 INFO    MainThread:198752 [wandb_run.py:_redirect():2395] Redirects installed.
+2025-06-09 10:06:00,901 INFO    MainThread:198752 [wandb_init.py:init():911] run started, returning control to user process

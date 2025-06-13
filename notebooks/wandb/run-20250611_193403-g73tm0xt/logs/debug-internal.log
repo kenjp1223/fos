@@ -1,0 +1,18 @@
+{"time":"2025-06-11T19:34:03.3653285-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-11T19:34:03.3653285-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250611_193403-g73tm0xt\\logs\\debug-core.log"}
+{"time":"2025-06-11T19:34:03.6077848-07:00","level":"INFO","msg":"created new stream","id":"g73tm0xt"}
+{"time":"2025-06-11T19:34:03.6077848-07:00","level":"INFO","msg":"stream: started","id":"g73tm0xt"}
+{"time":"2025-06-11T19:34:03.6077848-07:00","level":"INFO","msg":"handler: started","stream_id":"g73tm0xt"}
+{"time":"2025-06-11T19:34:03.6077848-07:00","level":"INFO","msg":"sender: started","stream_id":"g73tm0xt"}
+{"time":"2025-06-11T19:34:03.6077848-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"g73tm0xt"}
+{"time":"2025-06-11T19:34:03.9151028-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-11T19:34:04.1647083-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-11T19:34:08.1189763-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-11T19:34:13.9155832-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-11T19:34:48.7179965-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-11T19:34:48.7247754-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-11T19:38:23.0420672-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-11T19:47:05.2958411-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-11T19:47:05.30116-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-11T19:47:06.7179993-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-11T19:47:06.7225069-07:00","level":"INFO","msg":"Pausing system monitor"}

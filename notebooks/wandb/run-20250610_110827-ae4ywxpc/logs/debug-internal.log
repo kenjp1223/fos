@@ -1,0 +1,23 @@
+{"time":"2025-06-10T11:08:27.0359511-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-10T11:08:27.0359511-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250610_110827-ae4ywxpc\\logs\\debug-core.log"}
+{"time":"2025-06-10T11:08:27.1425304-07:00","level":"INFO","msg":"created new stream","id":"ae4ywxpc"}
+{"time":"2025-06-10T11:08:27.1425304-07:00","level":"INFO","msg":"stream: started","id":"ae4ywxpc"}
+{"time":"2025-06-10T11:08:27.1425304-07:00","level":"INFO","msg":"handler: started","stream_id":"ae4ywxpc"}
+{"time":"2025-06-10T11:08:27.1447179-07:00","level":"INFO","msg":"sender: started","stream_id":"ae4ywxpc"}
+{"time":"2025-06-10T11:08:27.1447179-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"ae4ywxpc"}
+{"time":"2025-06-10T11:08:27.4491792-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-10T11:08:37.4498856-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-10T12:31:02.8476435-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/ae4ywxpc/file_stream"}
+{"time":"2025-06-10T12:31:26.3279053-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/ae4ywxpc/file_stream"}
+{"time":"2025-06-10T12:31:30.612327-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-06-10T12:37:38.9901256-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/ae4ywxpc/file_stream"}
+{"time":"2025-06-10T12:45:31.540799-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-06-10T13:22:00.4785953-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-10T13:22:00.479536-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-10T13:22:01.2793674-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-10T13:22:01.4372297-07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-06-10T13:22:02.4620905-07:00","level":"INFO","msg":"stream: closing","id":"ae4ywxpc"}
+{"time":"2025-06-10T13:22:02.4620905-07:00","level":"INFO","msg":"handler: closed","stream_id":"ae4ywxpc"}
+{"time":"2025-06-10T13:22:02.4620905-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ae4ywxpc"}
+{"time":"2025-06-10T13:22:02.4620905-07:00","level":"INFO","msg":"sender: closed","stream_id":"ae4ywxpc"}
+{"time":"2025-06-10T13:22:02.4620905-07:00","level":"INFO","msg":"stream: closed","id":"ae4ywxpc"}

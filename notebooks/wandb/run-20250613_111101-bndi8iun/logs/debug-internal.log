@@ -1,0 +1,9 @@
+{"time":"2025-06-13T11:11:01.467285-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-13T11:11:01.4677938-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250613_111101-bndi8iun\\logs\\debug-core.log"}
+{"time":"2025-06-13T11:11:01.7207191-07:00","level":"INFO","msg":"created new stream","id":"bndi8iun"}
+{"time":"2025-06-13T11:11:01.7207191-07:00","level":"INFO","msg":"stream: started","id":"bndi8iun"}
+{"time":"2025-06-13T11:11:01.7207191-07:00","level":"INFO","msg":"sender: started","stream_id":"bndi8iun"}
+{"time":"2025-06-13T11:11:01.7207191-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"bndi8iun"}
+{"time":"2025-06-13T11:11:01.7207191-07:00","level":"INFO","msg":"handler: started","stream_id":"bndi8iun"}
+{"time":"2025-06-13T11:11:01.9348728-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-13T11:11:02.7229936-07:00","level":"INFO","msg":"Pausing system monitor"}

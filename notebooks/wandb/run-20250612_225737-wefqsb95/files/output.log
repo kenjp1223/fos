@@ -1,0 +1,68 @@
+fitting model with 18 factors
+Shapes:
+counts: (43, 3449144)
+factors: (18, 3449144)
+count_loadings: (43, 18)
+count_row_effects: (43,)
+count_col_effects: (3449144,)
+counts dtype: float32
+sparsity_penalty type: <class 'float'>
+elastic_net_frac type: <class 'float'>
+0.3972222222222222
+0.3972222222222222
+
+ANOVA Results:
+       factor  f_statistic   p_value  \
+0    factor_0     4.565530  0.002420
+1    factor_1     0.897395  0.493029
+2    factor_2     5.881842  0.000427
+3    factor_3     3.323490  0.014061
+4    factor_4     0.385696  0.855385
+5    factor_5     2.396815  0.055792
+6    factor_6     1.153876  0.350018
+7    factor_7     1.156460  0.348767
+8    factor_8     0.704561  0.623636
+9    factor_9     0.752039  0.589950
+10  factor_10     0.371128  0.865139
+11  factor_11     1.014131  0.423287
+12  factor_12     0.462794  0.801312
+13  factor_13     2.569129  0.043058
+14  factor_14     0.751023  0.590661
+15  factor_15     0.981785  0.441841
+16  factor_16     1.159782  0.347165
+17  factor_17     0.199490  0.960652
+
+                              significant_comparisons  corrected_p_value
+0                                                  []           0.021783
+1                                                  []           0.801818
+2   [Saline-Acute_Morphine (p=0.0004), Saline-With...           0.007692
+3                                                  []           0.084367
+4                                                  []           0.916030
+5                                                  []           0.200850
+6                                                  []           0.787540
+7                                                  []           0.787540
+8                                                  []           0.801818
+9                                                  []           0.801818
+10                                                 []           0.916030
+11                                                 []           0.795313
+12                                                 []           0.916030
+13                                                 []           0.193761
+14                                                 []           0.801818
+15                                                 []           0.795313
+16                                                 []           0.787540
+17                                                 []           0.960652
+
+Significant Findings:
+
+Factor factor_0:
+ANOVA p-value: 0.0024
+Corrected p-value: 0.0218
+Significant comparisons with Saline:
+
+Factor factor_2:
+ANOVA p-value: 0.0004
+Corrected p-value: 0.0077
+Significant comparisons with Saline:
+  - Saline-Acute_Morphine (p=0.0004)
+  - Saline-Withdrawal_Morphine (p=0.0317)
+  - Saline-Chronic_Morphine_21 (p=0.0321)

@@ -1,0 +1,10 @@
+{"time":"2025-06-10T18:09:36.486973-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-10T18:09:36.486973-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250610_180936-07dtt9h3\\logs\\debug-core.log"}
+{"time":"2025-06-10T18:09:36.5955841-07:00","level":"INFO","msg":"created new stream","id":"07dtt9h3"}
+{"time":"2025-06-10T18:09:36.5955841-07:00","level":"INFO","msg":"stream: started","id":"07dtt9h3"}
+{"time":"2025-06-10T18:09:36.5955841-07:00","level":"INFO","msg":"handler: started","stream_id":"07dtt9h3"}
+{"time":"2025-06-10T18:09:36.5955841-07:00","level":"INFO","msg":"sender: started","stream_id":"07dtt9h3"}
+{"time":"2025-06-10T18:09:36.5955841-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"07dtt9h3"}
+{"time":"2025-06-10T18:09:36.95586-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-10T18:09:46.9565238-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-10T18:12:11.3098117-07:00","level":"INFO","msg":"Pausing system monitor"}

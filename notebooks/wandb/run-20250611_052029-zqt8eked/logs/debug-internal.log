@@ -1,0 +1,18 @@
+{"time":"2025-06-11T05:20:29.8891851-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-11T05:20:29.8891851-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250611_052029-zqt8eked\\logs\\debug-core.log"}
+{"time":"2025-06-11T05:20:30.1230043-07:00","level":"INFO","msg":"created new stream","id":"zqt8eked"}
+{"time":"2025-06-11T05:20:30.1230043-07:00","level":"INFO","msg":"stream: started","id":"zqt8eked"}
+{"time":"2025-06-11T05:20:30.1230043-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"zqt8eked"}
+{"time":"2025-06-11T05:20:30.1230043-07:00","level":"INFO","msg":"sender: started","stream_id":"zqt8eked"}
+{"time":"2025-06-11T05:20:30.1230043-07:00","level":"INFO","msg":"handler: started","stream_id":"zqt8eked"}
+{"time":"2025-06-11T05:20:30.5058145-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-11T05:20:40.5060649-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-11T06:20:52.2658045-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-11T06:20:52.2665392-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-11T06:20:53.1723072-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-11T06:20:53.2677524-07:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading summary","runtime_seconds":0.0954452}],"total_operations":1}}
+{"time":"2025-06-11T06:20:54.331475-07:00","level":"INFO","msg":"stream: closing","id":"zqt8eked"}
+{"time":"2025-06-11T06:20:54.331475-07:00","level":"INFO","msg":"handler: closed","stream_id":"zqt8eked"}
+{"time":"2025-06-11T06:20:54.331475-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"zqt8eked"}
+{"time":"2025-06-11T06:20:54.331475-07:00","level":"INFO","msg":"sender: closed","stream_id":"zqt8eked"}
+{"time":"2025-06-11T06:20:54.331475-07:00","level":"INFO","msg":"stream: closed","id":"zqt8eked"}

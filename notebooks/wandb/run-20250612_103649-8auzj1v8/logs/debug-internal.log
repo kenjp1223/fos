@@ -1,0 +1,45 @@
+{"time":"2025-06-12T10:36:49.79805-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-12T10:36:49.79805-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250612_103649-8auzj1v8\\logs\\debug-core.log"}
+{"time":"2025-06-12T10:36:49.9047946-07:00","level":"INFO","msg":"created new stream","id":"8auzj1v8"}
+{"time":"2025-06-12T10:36:49.9047946-07:00","level":"INFO","msg":"stream: started","id":"8auzj1v8"}
+{"time":"2025-06-12T10:36:49.9047946-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"8auzj1v8"}
+{"time":"2025-06-12T10:36:49.9047946-07:00","level":"INFO","msg":"sender: started","stream_id":"8auzj1v8"}
+{"time":"2025-06-12T10:36:49.9047946-07:00","level":"INFO","msg":"handler: started","stream_id":"8auzj1v8"}
+{"time":"2025-06-12T10:36:50.2530178-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-12T10:36:50.6816363-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-12T10:36:50.6890766-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-12T10:36:51.4878841-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-12T10:38:06.3595607-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-12T10:38:06.3601269-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-12T10:38:07.9678354-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-12T10:38:10.2534458-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-12T10:38:44.4376794-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-12T10:38:59.2878139-07:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-06-12T10:58:44.9908664-07:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-06-12T11:12:36.8286392-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-06-12T11:14:22.0812434-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-06-12T11:15:37.5270679-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-06-12T11:16:09.4996042-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:16:09.7062549-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-06-12T11:16:43.7663645-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-06-12T11:17:21.9692003-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-06-12T11:18:08.9011147-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-06-12T11:18:48.4665299-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:19:11.1336257-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-06-12T11:19:18.4797464-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:19:29.0043187-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:20:20.8911082-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:21:40.8593078-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-06-12T11:21:48.4746214-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:24:27.0564667-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-06-12T11:24:59.5384716-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": context deadline exceeded"}
+{"time":"2025-06-12T11:25:34.0101081-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-06-12T11:27:53.3713509-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:28:00.9076933-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:28:53.3687404-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:29:10.4264102-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/graphql"}
+{"time":"2025-06-12T11:29:23.6525604-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:31:44.7046639-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/graphql"}
+{"time":"2025-06-12T11:32:18.3628722-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}
+{"time":"2025-06-12T11:32:44.7513625-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/graphql"}
+{"time":"2025-06-12T11:32:48.375942-07:00","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/ken1223-university-of-washington/morphine-fos-seminmf-counts/8auzj1v8/file_stream"}

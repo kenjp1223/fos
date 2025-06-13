@@ -35,7 +35,7 @@ def tree_dot(pytree1, pytree2):
 
 
 def scale_counts(counts, initial_params=None):
-    """Scale counts data using z-score normalization, preserving zeros.
+    """Scale counts data using z-score normalization, preserving zeros and ensuring non-negativity.
     
     Args:
         counts: Array of count data
@@ -47,6 +47,11 @@ def scale_counts(counts, initial_params=None):
         If initial_params is provided:
             tuple: (scaled_counts, scaled_params, scaling_params)
     """
+    # Handle negative values by shifting to non-negative range
+    min_val = jnp.min(counts)
+    if min_val < 0:
+        counts = counts - min_val
+    
     # Only compute statistics on non-zero counts
     non_zero_mask = counts > 0
     data_mean = jnp.mean(counts[non_zero_mask])
@@ -57,9 +62,13 @@ def scale_counts(counts, initial_params=None):
                             (counts - data_mean) / data_std,
                             0.0)
     
+    # Ensure non-negativity after scaling
+    scaled_counts = jnp.maximum(scaled_counts, 0.0)
+    
     scaling_params = {
         'mean': data_mean,
-        'std': data_std
+        'std': data_std,
+        'min_val': min_val
     }
     
     if initial_params is not None:
@@ -81,13 +90,19 @@ def unscale_counts(scaled_counts, scaling_params):
     
     Args:
         scaled_counts: Scaled count data
-        scaling_params: Dict containing 'mean' and 'std' used for scaling
+        scaling_params: Dict containing 'mean', 'std', and 'min_val' used for scaling
         
     Returns:
         Array of unscaled counts
     """
     # Only compute statistics on non-zero counts
     non_zero_mask = scaled_counts > 0
-    return jnp.where(non_zero_mask,
-                    scaled_counts * scaling_params['std'] + scaling_params['mean'],
-                    0.0)
+    unscaled = jnp.where(non_zero_mask,
+                        scaled_counts * scaling_params['std'] + scaling_params['mean'],
+                        0.0)
+    
+    # Add back the minimum value if it was subtracted
+    if 'min_val' in scaling_params and scaling_params['min_val'] < 0:
+        unscaled = unscaled + scaling_params['min_val']
+    
+    return unscaled

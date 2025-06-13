@@ -1,0 +1,18 @@
+{"time":"2025-06-11T13:51:34.490232-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-11T13:51:34.490232-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250611_135134-pge2raof\\logs\\debug-core.log"}
+{"time":"2025-06-11T13:51:34.5970433-07:00","level":"INFO","msg":"created new stream","id":"pge2raof"}
+{"time":"2025-06-11T13:51:34.5970433-07:00","level":"INFO","msg":"stream: started","id":"pge2raof"}
+{"time":"2025-06-11T13:51:34.5970433-07:00","level":"INFO","msg":"handler: started","stream_id":"pge2raof"}
+{"time":"2025-06-11T13:51:34.5980448-07:00","level":"INFO","msg":"sender: started","stream_id":"pge2raof"}
+{"time":"2025-06-11T13:51:34.5980448-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"pge2raof"}
+{"time":"2025-06-11T13:51:34.8001702-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-11T13:51:44.8028334-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-11T13:54:19.0444127-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-11T13:54:19.0447453-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-11T13:54:19.8491239-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-11T13:54:19.9884389-07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-06-11T13:54:20.9972044-07:00","level":"INFO","msg":"stream: closing","id":"pge2raof"}
+{"time":"2025-06-11T13:54:21.0028919-07:00","level":"INFO","msg":"handler: closed","stream_id":"pge2raof"}
+{"time":"2025-06-11T13:54:21.0028919-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"pge2raof"}
+{"time":"2025-06-11T13:54:21.0028919-07:00","level":"INFO","msg":"sender: closed","stream_id":"pge2raof"}
+{"time":"2025-06-11T13:54:21.0028919-07:00","level":"INFO","msg":"stream: closed","id":"pge2raof"}

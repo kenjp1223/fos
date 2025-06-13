@@ -1,0 +1,18 @@
+{"time":"2025-06-12T13:50:34.787149-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-12T13:50:34.787149-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250612_135034-eiag8nbj\\logs\\debug-core.log"}
+{"time":"2025-06-12T13:50:34.8914552-07:00","level":"INFO","msg":"created new stream","id":"eiag8nbj"}
+{"time":"2025-06-12T13:50:34.8919919-07:00","level":"INFO","msg":"stream: started","id":"eiag8nbj"}
+{"time":"2025-06-12T13:50:34.8919919-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"eiag8nbj"}
+{"time":"2025-06-12T13:50:34.8919919-07:00","level":"INFO","msg":"sender: started","stream_id":"eiag8nbj"}
+{"time":"2025-06-12T13:50:34.8919919-07:00","level":"INFO","msg":"handler: started","stream_id":"eiag8nbj"}
+{"time":"2025-06-12T13:50:35.0708337-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-12T13:50:45.0712038-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-12T14:00:44.6624034-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-12T14:00:44.6624034-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-12T14:00:45.3251224-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-12T14:00:45.4163085-07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-06-12T14:00:46.4254722-07:00","level":"INFO","msg":"stream: closing","id":"eiag8nbj"}
+{"time":"2025-06-12T14:00:46.4254722-07:00","level":"INFO","msg":"handler: closed","stream_id":"eiag8nbj"}
+{"time":"2025-06-12T14:00:46.4254722-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"eiag8nbj"}
+{"time":"2025-06-12T14:00:46.4254722-07:00","level":"INFO","msg":"sender: closed","stream_id":"eiag8nbj"}
+{"time":"2025-06-12T14:00:46.4254722-07:00","level":"INFO","msg":"stream: closed","id":"eiag8nbj"}

@@ -1,0 +1,10 @@
+fitting model with 0.009999999776482582 sparsity and  22 factors
+Shapes:
+counts: (43, 1034743)
+factors: (22, 1034743)
+count_loadings: (43, 22)
+count_row_effects: (43,)
+count_col_effects: (1034743,)
+counts dtype: float32
+sparsity_penalty type: <class 'float'>
+elastic_net_frac type: <class 'float'>

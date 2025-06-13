@@ -128,20 +128,17 @@ def compute_quadratic_approx(counts, mask, params, mean_func, data_variance=1.0)
     # Apply link function to get predictions
     predictions = f(activations)
     
-    # For Gaussian likelihood with identity link on the mean:
-    # -log p(y|μ,σ²) = (y-μ)²/(2σ²) + const
-    # With g(a) = μ, where g is the link function:
-    # d²(-log p)/da² = (g'(a))²/σ² + g''(a)(y-g(a))/σ²
-    # d(-log p)/da = -g'(a)(y-g(a))/σ²
-    
     var = data_variance
     residuals = counts - predictions
     
     df_vals = df(activations)
     d2f_vals = d2f(activations)
     
-    # Correct quadratic approximation terms
-    J_counts = mask * ((df_vals**2) / var + d2f_vals * (-residuals) / var)
+    # Compute the quadratic approximation terms
+    # For softplus, we need to be careful about the curvature
+    # When activations are large, d2f_vals approaches 0, so we need to ensure
+    # the quadratic term doesn't become too small
+    J_counts = mask * ((df_vals**2) / var + jnp.maximum(d2f_vals * (-residuals) / var, 1e-6))
     h_counts = mask * df_vals * residuals / var
     
     return QuadraticApprox(J_counts, h_counts)
@@ -269,8 +266,11 @@ def update_loadings(quad_approx, params, sparsity_penalty, elastic_net_frac):
             num = jnp.einsum('n,n->', factor_k, (h_m + J_m * loading_mk * factor_k))
             den = jnp.einsum('n,n,n->', J_m, factor_k, factor_k) + (1 - elastic_net_frac) * sparsity_penalty
             new_loading_mk = soft_threshold(num, elastic_net_frac * sparsity_penalty) / (den + 1e-8)
-            h_m += J_m * loading_mk * factor_k
-            h_m -= J_m * new_loading_mk * factor_k
+            
+            # Update the residual term only once with the change in loading
+            loading_change = new_loading_mk - loading_mk
+            h_m = h_m - J_m * loading_change * factor_k
+            
             return h_m, new_loading_mk
         h_m, loading_m = lax.scan(_update_one_coord, h_m, (loading_m, params.factors))
         return h_m, loading_m
@@ -290,11 +290,23 @@ def update_factors(quad_approx, params):
     def _update_one_column(hc_n, Jc_n, factor_n):
         def _update_one_coord(hc_n, args):
             factor_nk, count_loading_k = args
-            num = jnp.einsum('m,m->', count_loading_k, (hc_n + Jc_n * factor_nk * count_loading_k))
-            den = jnp.einsum('m,m,m->', Jc_n, count_loading_k, count_loading_k)
-            new_factor_nk = jnp.maximum(num, 0.0) / (den + 1e-8)  # Non-negativity constraint
-            hc_n += Jc_n * factor_nk * count_loading_k
-            hc_n -= Jc_n * new_factor_nk * count_loading_k
+            # Compute the gradient term separately
+            grad_term = jnp.einsum('m,m->', count_loading_k, hc_n)
+            # Compute the quadratic term separately
+            quad_term = jnp.einsum('m,m,m->', Jc_n, count_loading_k, count_loading_k)
+            # Add a small regularization to prevent denominator from being too small
+            quad_term = jnp.maximum(quad_term, 1e-6)
+            
+            # Compute the update with a step size
+            step_size = 0.1  # Small step size to prevent overshooting
+            new_factor_nk = factor_nk + step_size * grad_term / quad_term
+            # Ensure non-negativity
+            new_factor_nk = jnp.maximum(new_factor_nk, 0.0)
+            
+            # Update the residual term
+            factor_change = new_factor_nk - factor_nk
+            hc_n = hc_n - Jc_n * factor_change * count_loading_k
+            
             return hc_n, new_factor_nk
         hc_n, factor_n = lax.scan(_update_one_coord, hc_n, (factor_n, params.count_loadings.T))
         return hc_n, factor_n
@@ -303,8 +315,10 @@ def update_factors(quad_approx, params):
     h_counts = h_countsT.T
     factors = factorsT.T
     
-    # Normalize factors and rescale loadings
-    scale = jnp.maximum(factors.sum(axis=1), 1e-8)
+    # Normalize factors and rescale loadings with minimum scale
+    raw_scale = factors.sum(axis=1) + 1e-8
+    min_scale = 0.1  # Minimum scale factor to prevent factors from becoming too small
+    scale = jnp.maximum(raw_scale, min_scale)
     factors /= scale[:, None]
     count_loadings = params.count_loadings * scale
     
@@ -467,92 +481,133 @@ def estimate_data_variance_proper(counts, mean_func="softplus", max_factors=20):
         return max(robust_var, 0.1)
 
 
-def fit_gaussian_seminmf(counts, initial_params, mask=None, mean_func="softplus", 
-                        num_iters=10, sparsity_penalty=1.0, elastic_net_frac=0.0, 
-                        num_coord_ascent_iters=20, tolerance=1e-3, data_variance=None):
+def check_data_requirements(counts, mask=None):
+    """Check if the data meets requirements for factorization.
+    
+    This function performs several checks on the input data to ensure it's suitable
+    for factorization. It checks for:
+    - NaN and Inf values
+    - Negative values
+    - Value ranges and statistics
+    - Data sparsity
+    - Constant rows/columns
+    - Mask statistics (if provided)
+    
+    Args:
+        counts: Array of count data
+        mask: Optional mask for held-out data
+        
+    Returns:
+        bool: True if data meets requirements, False otherwise
+        
+    Example:
+        >>> import jax.numpy as jnp
+        >>> from fos.adjusted_seminmf_gaussian_fixed import check_data_requirements
+        >>> data = jnp.array([[1.0, 2.0], [3.0, 4.0]])
+        >>> check_data_requirements(data)
     """
-    Fit Gaussian SemiNMF with softplus link function
+    print("\nChecking data requirements:")
+    
+    # Check for NaN and Inf values
+    has_nan = jnp.isnan(counts).any()
+    has_inf = jnp.isinf(counts).any()
+    print(f"Contains NaN values: {has_nan}")
+    print(f"Contains Inf values: {has_inf}")
+    
+    # Check value ranges
+    min_val = float(jnp.min(counts))
+    max_val = float(jnp.max(counts))
+    mean_val = float(jnp.mean(counts))
+    std_val = float(jnp.std(counts))
+    print(f"Value range: [{min_val:.2f}, {max_val:.2f}]")
+    print(f"Mean: {mean_val:.2f}")
+    print(f"Std: {std_val:.2f}")
+    
+    # Check for negative values
+    has_neg = (counts < 0).any()
+    print(f"Contains negative values: {has_neg}")
+    
+    # Check sparsity
+    sparsity = float(jnp.mean(counts == 0))
+    print(f"Data sparsity: {sparsity:.2%}")
+    
+    # Check mask if provided
+    if mask is not None:
+        mask_sparsity = float(jnp.mean(~mask))
+        print(f"Mask sparsity: {mask_sparsity:.2%}")
+    
+    # Check for constant rows/columns
+    row_std = jnp.std(counts, axis=1)
+    col_std = jnp.std(counts, axis=0)
+    has_const_rows = (row_std == 0).any()
+    has_const_cols = (col_std == 0).any()
+    print(f"Contains constant rows: {has_const_rows}")
+    print(f"Contains constant columns: {has_const_cols}")
+    
+    # Return True if all checks pass
+    return not (has_nan or has_inf or has_neg)
+
+
+def fit_gaussian_seminmf(counts, initial_params, mask=None, mean_func="softplus", num_iters=100,
+                        sparsity_penalty=0.0, elastic_net_frac=0.5, num_coord_ascent_iters=10,
+                        tolerance=1e-5, data_variance=None):
+    """Fit the semi-NMF model with Gaussian noise.
+    
+    Args:
+        counts: Array of count data
+        initial_params: Initial parameters for the model
+        mask: Optional mask for the data
+        mean_func: Function to compute mean (default: "softplus")
+        num_iters: Number of iterations to run
+        sparsity_penalty: Penalty for sparsity
+        elastic_net_frac: Fraction of elastic net penalty
+        num_coord_ascent_iters: Number of coordinate ascent iterations
+        tolerance: Convergence tolerance
+        data_variance: Optional data variance
+        
+    Returns:
+        tuple: (params, losses, heldout_loglikes)
     """
-    mask = jnp.ones_like(counts, dtype=bool) if mask is None else mask
-    
-    # Estimate data variance if not provided
-    if data_variance is None:
-        data_variance = estimate_data_variance_proper(counts, mean_func, initial_params.num_factors)
-        print(f"Estimated data variance: {data_variance:.6f}")
-    
-    # Validate variance
-    if jnp.isnan(data_variance) or data_variance <= 0:
-        print("⚠️  Invalid variance estimate, using fallback")
-        data_variance = max(float(jnp.var(counts)) * 0.1, 0.1)
-    
-    print(f"Using data variance: {data_variance:.6f}")
-
-    def _step(params, _):
-        # Store old params for convergence check
-        old_params = params
-        
-        # Update row parameters (loadings and row effects)
-        quad_approx = compute_quadratic_approx(counts, mask, params, mean_func, data_variance)
-
-        def _row_step(carry, _):
-            quad_approx, params = carry
-            quad_approx, params = update_loadings(quad_approx, params, sparsity_penalty, elastic_net_frac)
-            quad_approx, params = update_row_effect(quad_approx, params)
-            return (quad_approx, params), None
-        
-        (quad_approx, new_params), _ = lax.scan(_row_step, (quad_approx, params), None, length=num_coord_ascent_iters)
-        
-        # Line search for row updates
-        params = backtracking_line_search(counts, mask, params, new_params, mean_func, 
-                                        sparsity_penalty, elastic_net_frac, data_variance)
-
-        # Update column parameters (factors and column effects)
-        quad_approx = compute_quadratic_approx(counts, mask, params, mean_func, data_variance)
-        
-        def _col_step(carry, _):
-            quad_approx, params = carry
-            quad_approx, params = update_factors(quad_approx, params)
-            quad_approx, params = update_column_effect(quad_approx, params)
-            return (quad_approx, params), None
-        
-        (_, new_params), _ = lax.scan(_col_step, (quad_approx, params), None, length=num_coord_ascent_iters)
-        
-        # Line search for column updates
-        params = backtracking_line_search(counts, mask, params, new_params, mean_func, 
-                                        sparsity_penalty, elastic_net_frac, data_variance)
-
-        # Compute loss and held-out likelihood
-        loss = compute_loss(counts, mask, params, mean_func, sparsity_penalty, elastic_net_frac, data_variance)
-        hll = heldout_loglike(counts, mask, params, mean_func, data_variance) if jnp.any(~mask) else 0.0
-        
-        return params, loss, hll
-
-    # Initialize
+    # Initialize parameters
     params = initial_params
-    losses = [compute_loss(counts, mask, params, mean_func, sparsity_penalty, elastic_net_frac, data_variance)]
-    hlls = [heldout_loglike(counts, mask, params, mean_func, data_variance) if jnp.any(~mask) else 0.0]
+    if data_variance is None:
+        data_variance = jnp.ones(counts.shape[1:])
     
-    # Run optimization
-    pbar = progress_bar(range(num_iters))
-    for itr in pbar:
-        params, loss, hll = _step(params, itr)
+    # Initialize lists to track progress
+    losses = []
+    heldout_loglikes = []
+    
+    # Compute initial loss
+    initial_loss = compute_loss(counts, mask, params, mean_func, sparsity_penalty, elastic_net_frac, data_variance)
+    losses.append(initial_loss)
+    
+    # Main optimization loop
+    for itr in range(num_iters):
+        # Take a step
+        params, loss, hll = _step(params, counts, mask, mean_func, sparsity_penalty, 
+                                 elastic_net_frac, num_coord_ascent_iters, data_variance)
         losses.append(loss)
-        hlls.append(hll)
+        heldout_loglikes.append(hll)
         
         # Check for convergence
-        relative_change = abs(losses[-1] - losses[-2]) / (abs(losses[-2]) + 1e-10)
-        if relative_change < tolerance:
-            print(f"Converged at iteration {itr+1}")
-            break
+        relative_change = abs(loss - losses[-2]) / (abs(losses[-2]) + 1e-10)
         
-        # Check for numerical issues
-        if jnp.isnan(loss) or jnp.isinf(loss):
-            print(f"❌ Numerical issues detected at iteration {itr+1}")
+        # Print detailed debugging information
+        print(f"\nIteration {itr+1}:")
+        print(f"Loss: {loss:.6f}")
+        print(f"Relative change: {relative_change:.6f}")
+        if isinstance(hll, dict):
+            print("Heldout log-likelihood components:")
+            for key, value in hll.items():
+                print(f"  {key}: {value:.6f}")
+        else:
+            print(f"Heldout log-likelihood: {hll:.6f}")
+        
+        if relative_change < tolerance:
+            print(f"Converged after {itr+1} iterations")
             break
-            
-        pbar.comment = f"loss: {loss:.6f}, rel_change: {relative_change:.6f}"
-
-    return params, jnp.stack(losses), jnp.stack(hlls)
+    
+    return params, jnp.array(losses), jnp.array(heldout_loglikes)
 
 
 # ===== EXECUTION SCRIPT INTEGRATION =====
@@ -604,3 +659,108 @@ def run_gaussian_seminmf_experiment(counts, masks, analysis_resultpath, WANDB_PR
     print(f"=== FINAL VARIANCE ESTIMATE: {estimated_data_variance:.6f} ===")
     
     return estimated_data_variance
+
+
+def analyze_constant_columns(counts):
+    """Analyze which columns are constant and their values.
+    
+    Args:
+        counts: Array of count data
+        
+    Returns:
+        tuple: (constant_col_indices, constant_col_values)
+    """
+    col_std = jnp.std(counts, axis=0)
+    constant_cols = (col_std == 0)
+    constant_col_indices = jnp.where(constant_cols)[0]
+    constant_col_values = counts[0, constant_col_indices]  # All values in constant columns are the same
+    
+    print("\nConstant Column Analysis:")
+    print(f"Number of constant columns: {len(constant_col_indices)}")
+    print("Constant column indices and their values:")
+    for idx, val in zip(constant_col_indices, constant_col_values):
+        print(f"Column {idx}: value = {val:.4f}")
+    
+    return constant_col_indices, constant_col_values
+
+
+def preprocess_data(counts, remove_constant_cols=True, handle_negatives=True):
+    """Preprocess data for factorization.
+    
+    Args:
+        counts: Array of count data
+        remove_constant_cols: Whether to remove constant columns
+        handle_negatives: Whether to handle negative values
+        
+    Returns:
+        tuple: (processed_data, removed_col_indices)
+    """
+    print("\nPreprocessing data:")
+    removed_col_indices = []
+    
+    # Handle negative values
+    if handle_negatives:
+        print("Handling negative values...")
+        counts = jnp.abs(counts)
+        print(f"New value range: [{float(jnp.min(counts)):.2f}, {float(jnp.max(counts)):.2f}]")
+    
+    # Remove constant columns
+    if remove_constant_cols:
+        print("Removing constant columns...")
+        col_std = jnp.std(counts, axis=0)
+        non_constant_cols = col_std > 0
+        removed_col_indices = jnp.where(~non_constant_cols)[0]
+        counts = counts[:, non_constant_cols]
+        print(f"Removed {len(removed_col_indices)} constant columns")
+        print(f"New shape: {counts.shape}")
+    
+    return counts, removed_col_indices
+
+
+if __name__ == "__main__":
+    # Example usage of check_data_requirements
+    import jax.numpy as jnp
+    
+    # Create some example data
+    # Good data example
+    good_data = jnp.array([
+        [1.0, 2.0, 3.0],
+        [4.0, 5.0, 6.0],
+        [7.0, 8.0, 9.0]
+    ])
+    
+    # Bad data example with issues
+    bad_data = jnp.array([
+        [1.0, jnp.nan, 3.0],
+        [4.0, -1.0, 6.0],
+        [7.0, 8.0, jnp.inf]
+    ])
+    
+    # Example with mask
+    mask = jnp.array([
+        [True, True, False],
+        [True, True, True],
+        [False, True, True]
+    ])
+    
+    print("\nTesting with good data:")
+    check_data_requirements(good_data)
+    
+    print("\nTesting with bad data:")
+    check_data_requirements(bad_data)
+    
+    print("\nTesting with mask:")
+    check_data_requirements(good_data, mask)
+    
+    # Example of how to use it in practice:
+    print("\nExample of practical usage:")
+    try:
+        # This will pass
+        if check_data_requirements(good_data):
+            print("Data is valid, proceeding with factorization...")
+        
+        # This will raise an error
+        if check_data_requirements(bad_data):
+            print("This won't be printed because bad_data will fail the check")
+    except ValueError as e:
+        print(f"Error: {e}")

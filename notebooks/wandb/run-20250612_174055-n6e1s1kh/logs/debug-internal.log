@@ -1,0 +1,18 @@
+{"time":"2025-06-12T17:40:55.5902868-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-06-12T17:40:55.5902868-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250612_174055-n6e1s1kh\\logs\\debug-core.log"}
+{"time":"2025-06-12T17:40:55.6975172-07:00","level":"INFO","msg":"created new stream","id":"n6e1s1kh"}
+{"time":"2025-06-12T17:40:55.6975172-07:00","level":"INFO","msg":"stream: started","id":"n6e1s1kh"}
+{"time":"2025-06-12T17:40:55.6975172-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"n6e1s1kh"}
+{"time":"2025-06-12T17:40:55.6975172-07:00","level":"INFO","msg":"sender: started","stream_id":"n6e1s1kh"}
+{"time":"2025-06-12T17:40:55.6975172-07:00","level":"INFO","msg":"handler: started","stream_id":"n6e1s1kh"}
+{"time":"2025-06-12T17:40:55.8971855-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-12T17:41:05.8976475-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
+{"time":"2025-06-12T17:48:23.8432293-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-12T17:48:23.8432293-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-12T17:48:24.2878722-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-12T17:48:24.3898389-07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-06-12T17:48:25.4088527-07:00","level":"INFO","msg":"stream: closing","id":"n6e1s1kh"}
+{"time":"2025-06-12T17:48:25.4088527-07:00","level":"INFO","msg":"handler: closed","stream_id":"n6e1s1kh"}
+{"time":"2025-06-12T17:48:25.4088527-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"n6e1s1kh"}
+{"time":"2025-06-12T17:48:25.4088527-07:00","level":"INFO","msg":"sender: closed","stream_id":"n6e1s1kh"}
+{"time":"2025-06-12T17:48:25.4093559-07:00","level":"INFO","msg":"stream: closed","id":"n6e1s1kh"}

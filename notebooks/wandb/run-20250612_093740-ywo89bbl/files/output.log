@@ -1,0 +1,8 @@
+fitting model with 0.0010000000474974513 sparsity and  6 factors
+
+Debug shapes in update_loadings:
+params.count_loadings shape: (43, 6)
+quad_approx['count_loadings']['linear'] shape: (43, 6467184)
+quad_approx['count_loadings']['quadratic'] shape: (6,)
+step_size shape after reshape: (6, 1)
+ls: cannot access '/scratch/groups/swl1/serotonin/npz_4/downsampled_data_4.npz': No such file or directory
