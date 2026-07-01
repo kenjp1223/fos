@@ -1,0 +1,36 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# ---- Experiment tracking ----
+wandb/
+**/wandb/
+
+# ---- Data & model outputs (regenerated; not source) ----
+*.zarr/
+*.npz
+*.npy
+*.mat
+*.pkl
+*.h5
+*.hdf5
+*.tif
+*.tiff
+*.png
+*.pdf
+*.svg
+chunk_counts.csv
+
+# ---- Notebooks ----
+# The raw exploratory notebooks carry large embedded outputs. Track only the cleaned
+# reproducible driver; ignore the rest.
+notebooks/*.ipynb
+!notebooks/fos_counts_clean.ipynb

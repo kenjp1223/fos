@@ -3,8 +3,8 @@ import jax
 import jax.numpy as jnp
 import warnings
 
-from jax import tree_map
-from jax.tree_util import tree_reduce
+#from jax import tree_map
+from jax.tree_util import tree_reduce, tree_map
 from tensorflow_probability.substrates import jax as tfp
 
 tfd = tfp.distributions
@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore")
 
 # Helper function to make a dataclass a JAX PyTree
 def register_pytree_node_dataclass(cls):
-  _flatten = lambda obj: jax.tree_flatten(dataclasses.asdict(obj))
+  _flatten = lambda obj: jax.tree_util.tree_flatten(dataclasses.asdict(obj))
   _unflatten = lambda d, children: cls(**d.unflatten(children))
   jax.tree_util.register_pytree_node(cls, _flatten, _unflatten)
   return cls

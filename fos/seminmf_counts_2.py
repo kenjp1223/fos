@@ -235,7 +235,6 @@ def compute_quadratic_approx(counts, mask, params, mean_func):
     
     This is a key component of the coordinate descent algorithm:
     1. For the Poisson loss (counts), uses a second-order Taylor expansion
-    2. For the Gaussian loss (intensity), directly uses the quadratic form
     
     The quadratic approximation makes the optimization problem easier to solve
     while still maintaining good convergence properties.

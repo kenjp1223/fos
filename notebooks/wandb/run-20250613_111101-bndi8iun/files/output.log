@@ -1,1 +1,4 @@
 fitting model with 9.999999747378752e-05 sparsity and  8 factors
+Loaded data shape: (43, 3449144)
+Data range: 0.00 to 295.08
+Data mean: 55.28 ± 9.06
