@@ -1,9 +1,0 @@
-{"time":"2025-06-09T12:17:23.2228884-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
-{"time":"2025-06-09T12:17:23.2228884-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250609_121723-8sq92rad\\logs\\debug-core.log"}
-{"time":"2025-06-09T12:17:23.3293047-07:00","level":"INFO","msg":"created new stream","id":"8sq92rad"}
-{"time":"2025-06-09T12:17:23.3293047-07:00","level":"INFO","msg":"stream: started","id":"8sq92rad"}
-{"time":"2025-06-09T12:17:23.3293047-07:00","level":"INFO","msg":"handler: started","stream_id":"8sq92rad"}
-{"time":"2025-06-09T12:17:23.3293047-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"8sq92rad"}
-{"time":"2025-06-09T12:17:23.3293047-07:00","level":"INFO","msg":"sender: started","stream_id":"8sq92rad"}
-{"time":"2025-06-09T12:17:23.6133646-07:00","level":"INFO","msg":"Starting system monitor"}
-{"time":"2025-06-09T12:17:33.6136029-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}

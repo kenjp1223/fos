@@ -1,9 +1,0 @@
-{"time":"2025-06-12T09:37:43.6244491-07:00","level":"INFO","msg":"using version","core version":"0.18.7"}
-{"time":"2025-06-12T09:37:43.6251776-07:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\stuberadmin\\fos\\notebooks\\wandb\\run-20250612_093740-ywo89bbl\\logs\\debug-core.log"}
-{"time":"2025-06-12T09:37:43.7296868-07:00","level":"INFO","msg":"created new stream","id":"ywo89bbl"}
-{"time":"2025-06-12T09:37:43.7296868-07:00","level":"INFO","msg":"stream: started","id":"ywo89bbl"}
-{"time":"2025-06-12T09:37:43.7296868-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"ywo89bbl"}
-{"time":"2025-06-12T09:37:43.7296868-07:00","level":"INFO","msg":"handler: started","stream_id":"ywo89bbl"}
-{"time":"2025-06-12T09:37:43.7296868-07:00","level":"INFO","msg":"sender: started","stream_id":"ywo89bbl"}
-{"time":"2025-06-12T09:37:43.9130474-07:00","level":"INFO","msg":"Starting system monitor"}
-{"time":"2025-06-12T09:37:53.9135439-07:00","level":"ERROR","msg":"monitor: disk: error sampling metrics: Incorrect function."}
